@@ -1,0 +1,31 @@
+{
+	"name": "4n-powerful-blog-template",
+	"version": "1.0.0",
+	"description": "A powerful template for personal blogs built with Netlify, Netlify CMS, Nuxt and Notion-liked theme. This template allows to use an on-site CMS for writing posts and manage website settings. Creating multiple categories, multiple posts, multiple non-categorized pages is possible. Happy blogging!",
+	"author": "Tùng Cao <hello@tungcv.com> (https://tungcv.com)",
+	"private": true,
+	"scripts": {
+		"dev": "nuxt",
+		"build": "nuxt build",
+		"start": "nuxt start",
+		"generate": "nuxt generate",
+		"analyze": "nuxt build --analyze"
+	},
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/cvtung/4N-powerful-blog-template#readme"
+	},
+	"license": "MIT",
+	"dependencies": {
+		"@nuxt/components": "2.2.1",
+		"@nuxt/image": "0.7.1",
+		"@nuxtjs/color-mode": "2.1.1",
+		"@nuxtjs/robots": "2.5.0",
+		"@nuxtjs/svg": "0.4.0",
+		"markdown-it-vue-minify": "1.0.0",
+		"nuxt": "2.15.8",
+		"nuxt-compress": "5.0.0",
+		"vue-social-sharing": "3.0.9"
+	},
+	"devDependencies": {}
+}

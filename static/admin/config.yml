@@ -1,0 +1,524 @@
+# Please check: https://www.netlifycms.org/docs/configuration-options/#configuration-file
+
+backend:
+    name: git-gateway
+    branch: main
+
+publish_mode: editorial_workflow
+
+media_folder: static/img
+public_folder: /img
+
+# site_url: https://your-site.com
+# display_url: https://your-site.com
+# logo_url: https://your-site.com/images/logo.svg
+
+locale: 'en'
+
+show_preview_links: true
+
+slug:
+    encoding: 'ascii'
+    clean_accents: true
+    sanitize_replacement: '-'
+
+collections:
+    - name: 'categories'
+      label: 'Categories'
+      description: 'All categories'
+      folder: 'content/categories'
+      create: true
+      format: 'json'
+      slug: '{{slug}}'
+      fields:
+          - {
+                label: 'Title',
+                name: 'title',
+                hint: 'Name of this category',
+                widget: 'string',
+            }
+          - {
+                label: 'Jumbotron',
+                name: 'jumbotron',
+                hint: 'Large image on the top of this category page',
+                widget: 'image',
+                required: false,
+                default: '',
+            }
+          - {
+                label: 'Icon',
+                name: 'icon',
+                hint: 'An image represents for this category',
+                widget: 'image',
+                required: false,
+                default: '',
+            }
+          - {
+                label: 'Description',
+                name: 'description',
+                hint: 'Description for this category',
+                widget: 'string',
+                required: false,
+                default: '',
+            }
+
+    - name: 'posts'
+      label: 'Posts'
+      description: 'Posts from all categories. Please check Workflow for all drafts'
+      folder: 'content/posts'
+      create: true
+      format: 'json'
+      slug: '{{year}}-{{month}}-{{day}}-{{hour}}-{{minute}}-{{second}}-{{slug}}'
+      preview_path: posts/{{slug}}
+      editor:
+          preview: true
+      fields:
+          - {
+                label: 'Title',
+                name: 'title',
+                hint: 'Name of this post',
+                widget: 'string',
+            }
+          - {
+                label: 'Category',
+                name: 'category',
+                hint: 'Categories that this post belongs to',
+                widget: 'relation',
+                collection: 'categories',
+                searchFields: ['title'],
+                valueField: '{{slug}}',
+                display_fields: ['title'],
+                multiple: true,
+            }
+          - {
+                label: 'Jumbotron',
+                name: 'jumbotron',
+                hint: 'Large image on the top of this post',
+                widget: 'image',
+                required: false,
+                default: '',
+            }
+          - {
+                label: 'Icon',
+                name: 'icon',
+                hint: 'An image represents for this post',
+                widget: 'image',
+                required: false,
+                default: '',
+            }
+          - {
+                label: 'Author name',
+                name: 'author_name',
+                hint: 'Author name. If empty, your name will be used',
+                widget: 'string',
+                required: false,
+                default: '',
+            }
+          - {
+                label: 'Author avatar',
+                name: 'author_avatar',
+                hint: 'Author avatar. If empty, your avatar will be used',
+                widget: 'image',
+                required: false,
+                default: '',
+            }
+          - {
+                label: 'Publish Date',
+                name: 'date',
+                hint: 'Default is now',
+                widget: 'datetime',
+                date_format: 'DD.MM.YYYY',
+                time_format: 'HH:mm',
+                format: 'LLL',
+                picker_utc: false,
+                required: false,
+            }
+          - {
+                label: 'Description',
+                name: 'description',
+                hint: 'Short text describes your post',
+                widget: 'string',
+                required: false,
+                default: '',
+            }
+          - {
+                label: 'Tags',
+                name: 'tags',
+                hint: 'Use comma "," to seperate tags',
+                widget: 'list',
+                required: false,
+                default: [],
+            }
+          - {
+                label: 'Body',
+                name: 'body',
+                widget: 'markdown',
+                required: false,
+                default: '',
+            }
+
+    - name: 'pages'
+      label: 'Pages'
+      description: 'Single pages belong to no category. A page with title "Index" must exist because it will be used as the home page'
+      folder: 'content/pages'
+      create: true
+      format: 'json'
+      slug: '{{slug}}'
+      preview_path: '{{ slug }}'
+      editor:
+          preview: true
+      fields:
+          - {
+                label: Title,
+                name: title,
+                hint: 'Name of this page',
+                widget: string,
+            }
+          - {
+                label: 'Jumbotron',
+                name: 'jumbotron',
+                hint: 'Large image on the top of this page',
+                widget: 'image',
+                required: false,
+                default: '',
+            }
+          - {
+                label: 'Icon',
+                name: 'icon',
+                hint: 'An image represents for this page',
+                widget: 'image',
+                required: false,
+                default: '',
+            }
+          - {
+                label: 'Author name',
+                name: 'author_name',
+                hint: 'Author name. If empty, your name will be used',
+                widget: 'string',
+                required: false,
+                default: '',
+            }
+          - {
+                label: 'Author avatar',
+                name: 'author_avatar',
+                hint: 'Author avatar. If empty, your avatar will be used',
+                widget: 'image',
+                required: false,
+                default: '',
+            }
+          - {
+                label: 'Publish Date',
+                name: 'date',
+                hint: 'Default is now',
+                widget: 'datetime',
+                date_format: 'DD.MM.YYYY',
+                time_format: 'HH:mm',
+                format: 'LLL',
+                picker_utc: false,
+                required: false,
+            }
+          - {
+                label: 'Description',
+                name: 'description',
+                hint: 'Short text describes your page',
+                widget: 'string',
+                required: false,
+                default: '',
+            }
+          - {
+                label: 'Body',
+                name: 'body',
+                widget: 'markdown',
+                required: false,
+                default: '',
+            }
+
+    - name: 'settings'
+      label: 'Settings'
+      description: 'Do not delete any file'
+      files:
+          - label: 'General'
+            name: 'general'
+            file: '/content/settings/general.json'
+            fields:
+                - {
+                      label: 'WEBSITE_NAME',
+                      name: 'WEBSITE_NAME',
+                      widget: 'string',
+                      required: false,
+                      default: 'Your website name',
+                  }
+                - {
+                      label: 'JUMBOTRON',
+                      name: 'JUMBOTRON',
+                      hint: 'Large image on the top of the home page',
+                      widget: 'image',
+                      required: false,
+                      default: '/img/jumbotron.jpg',
+                  }
+                - {
+                      label: 'LOGO',
+                      name: 'LOGO',
+                      widget: 'image',
+                      required: false,
+                      default: '/img/logo.png',
+                  }
+                - {
+                      label: 'AUTHOR_NAME',
+                      name: 'AUTHOR_NAME',
+                      hint: 'Default author name for pages',
+                      widget: 'string',
+                      required: false,
+                      default: 'Your name',
+                  }
+                - {
+                      label: 'AUTHOR_AVATAR',
+                      name: 'AUTHOR_AVATAR',
+                      widget: 'image',
+                      required: false,
+                      default: '/img/author.svg',
+                  }
+                - {
+                      label: 'DESCRIPTION',
+                      name: 'DESCRIPTION',
+                      hint: 'Short text for website description',
+                      widget: 'string',
+                      required: false,
+                      default: 'An awesome blog',
+                  }
+          - label: 'Social sharing'
+            name: 'social-sharing'
+            file: '/content/settings/social-sharing.json'
+            fields:
+                - {
+                      label: 'Baidu',
+                      name: 'baidu',
+                      widget: 'boolean',
+                      default: true,
+                  }
+                - {
+                      label: 'Buffer',
+                      name: 'buffer',
+                      widget: 'boolean',
+                      default: true,
+                  }
+                - {
+                      label: 'Email',
+                      name: 'email',
+                      widget: 'boolean',
+                      default: true,
+                  }
+                - {
+                      label: 'Evernote',
+                      name: 'evernote',
+                      widget: 'boolean',
+                      default: true,
+                  }
+                - {
+                      label: 'Facebook',
+                      name: 'facebook',
+                      widget: 'boolean',
+                      default: true,
+                  }
+                - {
+                      label: 'Flipboard',
+                      name: 'flipboard',
+                      widget: 'boolean',
+                      default: true,
+                  }
+                - {
+                      label: 'Hackernews',
+                      name: 'hackernews',
+                      widget: 'boolean',
+                      default: true,
+                  }
+                - {
+                      label: 'Instapaper',
+                      name: 'instapaper',
+                      widget: 'boolean',
+                      default: true,
+                  }
+                - {
+                      label: 'Line',
+                      name: 'line',
+                      widget: 'boolean',
+                      default: true,
+                  }
+                - {
+                      label: 'LinkedIn',
+                      name: 'linkedin',
+                      widget: 'boolean',
+                      default: true,
+                  }
+                - {
+                      label: 'Odnoklassniki',
+                      name: 'odnoklassniki',
+                      widget: 'boolean',
+                      default: true,
+                  }
+                - {
+                      label: 'Pinterest',
+                      name: 'pinterest',
+                      widget: 'boolean',
+                      default: true,
+                  }
+                - {
+                      label: 'Pocket',
+                      name: 'pocket',
+                      widget: 'boolean',
+                      default: true,
+                  }
+                - {
+                      label: 'Quora',
+                      name: 'quora',
+                      widget: 'boolean',
+                      default: true,
+                  }
+                - {
+                      label: 'Reddit',
+                      name: 'reddit',
+                      widget: 'boolean',
+                      default: true,
+                  }
+                - {
+                      label: 'Skype',
+                      name: 'skype',
+                      widget: 'boolean',
+                      default: true,
+                  }
+                - {
+                      label: 'SMS',
+                      name: 'sms',
+                      widget: 'boolean',
+                      default: true,
+                  }
+                - {
+                      label: 'StumbleUpon',
+                      name: 'stumbleupon',
+                      widget: 'boolean',
+                      default: true,
+                  }
+                - {
+                      label: 'Telegram',
+                      name: 'telegram',
+                      widget: 'boolean',
+                      default: true,
+                  }
+                - {
+                      label: 'Tumblr',
+                      name: 'tumblr',
+                      widget: 'boolean',
+                      default: true,
+                  }
+                - {
+                      label: 'Twitter',
+                      name: 'twitter',
+                      widget: 'boolean',
+                      default: true,
+                  }
+                - {
+                      label: 'Twitter username',
+                      name: 'twitter_username',
+                      widget: 'text',
+                      hint: 'People will mention your Twitter username when they share your post on Twitter',
+                  }
+                - {
+                      label: 'Viber',
+                      name: 'viber',
+                      widget: 'boolean',
+                      default: true,
+                  }
+                - { label: 'Vk', name: 'vk', widget: 'boolean', default: true }
+                - {
+                      label: 'Weibo',
+                      name: 'weibo',
+                      widget: 'boolean',
+                      default: true,
+                  }
+                - {
+                      label: 'Whatsapp',
+                      name: 'whatsapp',
+                      widget: 'boolean',
+                      default: true,
+                  }
+                - {
+                      label: 'Wordpress',
+                      name: 'wordpress',
+                      widget: 'boolean',
+                      default: true,
+                  }
+                - {
+                      label: 'Xing',
+                      name: 'xing',
+                      widget: 'boolean',
+                      default: true,
+                  }
+                - {
+                      label: 'Yammer',
+                      name: 'yammer',
+                      widget: 'boolean',
+                      default: true,
+                  }
+          - label: 'Navigation bar'
+            name: 'navigation-bar'
+            file: '/content/settings/navigation-bar.json'
+            fields:
+                - {
+                      label: 'Display page list first',
+                      name: 'display-page-list-first',
+                      widget: 'boolean',
+                      default: false,
+                      required: false,
+                      hint: 'Lists are displayed from left to right. Default order is category list then page list',
+                  }
+                - label: 'Categories'
+                  name: 'categories'
+                  widget: 'object'
+                  collapsed: false
+                  fields:
+                      - {
+                            label: 'List',
+                            name: 'list',
+                            widget: 'relation',
+                            collection: 'categories',
+                            searchFields: ['title'],
+                            valueField: '{{slug}}',
+                            display_fields: ['title'],
+                            multiple: true,
+                            required: false,
+                            hint: 'Select items by your order. If this list is empty, everything will be displayed in alphabet order despite of other settings.',
+                        }
+                      - {
+                            label: 'Display selected only',
+                            name: 'display-selected-only',
+                            widget: 'boolean',
+                            default: false,
+                            required: false,
+                            hint: 'Only display your selected list. If OFF, the rest will be appended to your list in alphabet order.',
+                        }
+                - label: 'Pages'
+                  name: 'pages'
+                  widget: 'object'
+                  collapsed: false
+                  hint: 'Ignore Index page, it will not be displayed in the navigation bar no matter what.'
+                  fields:
+                      - {
+                            label: 'List',
+                            name: 'list',
+                            widget: 'relation',
+                            collection: 'pages',
+                            searchFields: ['title'],
+                            valueField: '{{slug}}',
+                            display_fields: ['title'],
+                            multiple: true,
+                            required: false,
+                            hint: 'Select items by your order. If this list is empty, everything will be displayed in alphabet order despite of other settings.',
+                        }
+                      - {
+                            label: 'Display selected only',
+                            name: 'display-selected-only',
+                            widget: 'boolean',
+                            default: false,
+                            required: false,
+                            hint: 'Only display your selected items. If OFF, the rest will be appended to your list in alphabet order.',
+                        }
